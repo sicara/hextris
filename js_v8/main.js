@@ -212,6 +212,7 @@ function animLoop() {
             if(gameState == 1 ){
                 if(!MainHex.delay) {
                     update(dt);
+                    iaPlay();
                 }
                 else{
                     MainHex.delay--;
