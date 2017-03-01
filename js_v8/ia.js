@@ -5,36 +5,38 @@ function iaPlay() {
 		return block.distFromHex < lowestHeight + 10;
 	});
 
-	var matchingScores = _.fill(Array(6), 0);
-	var nonMatchingScores = _.fill(Array(6), 0);
-
+	var scores = [];
 	for (rotation = 0; rotation < 6; rotation++) {
-		var matches = _.fill(Array(6), 0);
-		var nonMatches = _.fill(Array(6), 0);
+		scores.push({
+			matches: 0,
+			mismatches: 0,
+		});
 		lowestBlocks.forEach(function (block) {
 			var hexIndex = (MainHex.getLaneOfFallingBlock(block) + rotation) % 6;
 			if (_.last(MainHex.blocks[hexIndex])) {
 				if (_.last(MainHex.blocks[hexIndex]).color === block.color) {
-					matches[hexIndex]++;
+					scores[rotation].matches++;
 				} else {
-					nonMatches[hexIndex]++;
+					scores[rotation].mismatches++;
 				}
 			}
 		});
-		matchingScores[rotation] = _.sum(matches);
-		nonMatchingScores[rotation] = _.sum(nonMatches);
 	}
+
 	var bestRotation = 0;
 	for (rotation = 0; rotation < 6; rotation++) {
-		if (matchingScores[rotation] > matchingScores[bestRotation]) {
+		if (scores[rotation].matches > scores[bestRotation].matches) {
 			bestRotation = rotation;
-		} else if (matchingScores[rotation] === matchingScores[bestRotation] && nonMatchingScores[rotation] < nonMatchingScores[bestRotation]) {
+		} else if (scores[rotation].matches === scores[bestRotation].matches && scores[rotation].mismatches < scores[bestRotation].mismatches) {
 			bestRotation = rotation;
 		}
 	}
-	matchingScores.indexOf(_.max(matchingScores));
+
 	if (bestRotation !== 0 && MainHex.targetAngle === MainHex.angle) {
-		console.log("Found good rotation: " + bestRotation + ", had " + matchingScores[bestRotation] + " score.");
+		console.log("Found good rotation: " + bestRotation + ", had " + scores[bestRotation].matches + " score.");
+		if (bestRotation > 3) {
+			bestRotation -= 6; // For visual effect
+		}
 		MainHex.rotate(bestRotation);
 	}
 }
