@@ -42,14 +42,19 @@ function Hex(sideLength) {
 		}
 	};
 
+	this.getLaneOfFallingBlock = function(block) {
+		var lane = this.sides - block.fallingLane;// -this.position;
+		lane += this.position;
+		lane = (lane + this.sides) % this.sides;
+		return lane;
+	}
+
 	this.addBlock = function(block) {
 		if (!(gameState == 1 || gameState === 0)) return;
 		block.settled = 1;
 		block.tint = 0.6;
-		var lane = this.sides - block.fallingLane;// -this.position;
+		var lane = this.getLaneOfFallingBlock(block);
 		this.shakes.push({lane:block.fallingLane, magnitude:4.5 * (window.devicePixelRatio ? window.devicePixelRatio : 1) * (settings.scale)});
-		lane += this.position;
-		lane = (lane + this.sides) % this.sides;
 		block.distFromHex = MainHex.sideLength / 2 * Math.sqrt(3) + block.height * this.blocks[lane].length;
 		this.blocks[lane].push(block);
 		block.attachedLane = lane;
@@ -160,7 +165,7 @@ function Hex(sideLength) {
 		else {
 			this.angle += this.angularVelocity;
 		}
- 
+
 		drawPolygon(this.x + gdx, this.y + gdy + this.dy, this.sides, this.sideLength, this.angle,arrayToColor(this.fillColor) , 0, 'rgba(0,0,0,0)');
 	};
 }
