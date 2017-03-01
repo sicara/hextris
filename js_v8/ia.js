@@ -1,6 +1,6 @@
 function iaPlay() {
 	var mainHexAngle = ((MainHex.angle) / 60 + 60000 - 0.5) % 6;
-	var lowestHeight = _.minBy(blocks, 'distFromHex').distFromHex || 0;
+	var lowestHeight = _.get(_.minBy(blocks, 'distFromHex'), 'distFromHex', 0);
 	var lowestBlocks = _.filter(blocks, function (block) {
 		return block.distFromHex < lowestHeight + 10;
 	});

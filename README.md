@@ -1,19 +1,10 @@
-Hextris
+Hextris Machine Learning Attempt
 ==========
 
-Built by @teamsnowman (@meadowstream, @garrettdreyfus, @nmoroze, and @themichaelyang) for HackExeter 2014
+This is an attempt at applying Machine Learning to gain high scores on the [Hextris game](http://hextris.io/).
 
-# Releases
-#### iOS: https://itunes.apple.com/us/app/hextris/id903769553?mt=8
-![](http://i.imgur.com/KBYZcf5.png)
+## Based on repo by Hextris
 
-#### Android: https://play.google.com/store/apps/details?id=com.hextris.hextris
-![](http://i.imgur.com/mxj8yKs.png)
+Fork of [Hextris/hextis](https://github.com/Hextris/hextris).
 
-## Press kit
-
-hextris.github.io/presskit/info.html
-
-## License
-
-This work is under a GPL license.
+Originally built by @teamsnowman (@meadowstream, @garrettdreyfus, @nmoroze, and @themichaelyang) for HackExeter 2014.
