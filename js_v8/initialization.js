@@ -20,10 +20,10 @@ function hidebottombar() {
 }
 
 function initialize(a) {
-    window.rush = 1;
+    window.rush = 2;
     window.lastTime = Date.now();
     window.iframHasLoaded = false;
-    window.colors = ["#e74c3c", "#f1c40f", "#3498db", "#2ecc71"];
+    window.colors = ["#e74c3c", "#f1c40f", "#e74c3c", "#f1c40f"];
     window.hexColorsToTintedColors = {
         "#e74c3c": "rgb(241,163,155)",
         "#f1c40f": "rgb(246,223,133)",
@@ -52,6 +52,7 @@ function initialize(a) {
     window.scoreOpacity = 0;
     window.textOpacity = 0;
     window.prevGameState = undefined;
+    window.elapsedTime = 0;
 
     //render.js
     window.op = 0;
@@ -158,6 +159,7 @@ function initialize(a) {
     window.importing = 0;
     window.importedHistory = undefined;
     window.startTime = undefined;
+    window.elapsedTime = 0;
 
     window.gameState;
     setStartScreen();

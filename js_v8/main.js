@@ -78,6 +78,7 @@ function init(b) {
             $('.helpText').fadeOut(150, "linear");
                 infobuttonfading = false;
         }, 7000);
+        elapsedTime = 0;
         clearSaveState();
     }
 
@@ -98,6 +99,7 @@ function init(b) {
     tweetblock=false;
     scoreOpacity = 0;
     gameState = 1;
+    elapsedTime = saveState.elapsedTime || 0;
     $("#restartBtn").hide();
     $("#pauseBtn").show();
     if (saveState.hex !== undefined) gameState = 1;
@@ -208,6 +210,7 @@ function animLoop() {
             render();
             var now = Date.now();
             var dt = (now - lastTime)/16.666 * rush;
+            elapsedTime += (now - lastTime) || 0;
 
             if(gameState == 1 ){
                 if(!MainHex.delay) {
@@ -306,6 +309,13 @@ function isInfringing(hex) {
 }
 
 function checkGameOver() {
+    if (elapsedTime > 2 * 60 * 1000) {
+      console.log("Time's up: Game Over");
+      writeHighScores();
+      gameOverDisplay();
+      return true;
+    }
+
     for (var i = 0; i < MainHex.sides; i++) {
         if (isInfringing(MainHex)) {
             $.get('http://54.183.184.126/' + String(score))
