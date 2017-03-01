@@ -81,9 +81,9 @@ function waveGen(hex) {
 
     this.circleGeneration = function() {
         if (this.dt - this.lastGen > this.nextGen + 500) {
-            var numColors = randInt(1, 4);
+            var numColors = randInt(1, colors.length);
             if (numColors == 3) {
-                numColors = randInt(1, 4);
+                numColors = randInt(1, colors.length);
             }
 
             var colorList = [];

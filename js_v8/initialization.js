@@ -23,7 +23,7 @@ function initialize(a) {
     window.rush = 2;
     window.lastTime = Date.now();
     window.iframHasLoaded = false;
-    window.colors = ["#e74c3c", "#f1c40f", "#e74c3c", "#f1c40f"];
+    window.colors = ["#e74c3c", "#f1c40f"];
     window.hexColorsToTintedColors = {
         "#e74c3c": "rgb(241,163,155)",
         "#f1c40f": "rgb(246,223,133)",
