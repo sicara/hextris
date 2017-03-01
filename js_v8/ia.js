@@ -33,7 +33,7 @@ function iaPlay() {
 	}
 
 	if (bestRotation !== 0 && MainHex.targetAngle === MainHex.angle) {
-		console.log("Found good rotation: " + bestRotation + ", had " + scores[bestRotation].matches + " score.");
+		// console.log("Found good rotation: " + bestRotation + ", had " + scores[bestRotation].matches + " score.");
 		if (bestRotation > 3) {
 			bestRotation -= 6; // For visual effect
 		}

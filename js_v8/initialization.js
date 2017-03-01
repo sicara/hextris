@@ -162,7 +162,7 @@ function initialize(a) {
     window.elapsedTime = 0;
 
     window.gameState;
-    setStartScreen();
+    // setStartScreen();
 
     if (a != 1) {
         window.canRestart = 1;
@@ -240,6 +240,9 @@ function initialize(a) {
             }
         }, 1);
     }
+    setTimeout(animLoop, 100)
+    init();
+    setTimeout(gameLoop, 0);
 }
 
 function startBtnHandler() {

@@ -200,94 +200,62 @@ function setStartScreen() {
     showbottombar();
 
     gameState = 0;
-    requestAnimFrame(animLoop);
+}
+
+function gameLoop() {
+  var virtualDt = 10;
+  var dt = virtualDt * rush;
+  switch (gameState) {
+      case 1:
+          elapsedTime += virtualDt;
+
+          if(gameState == 1 ){
+              if(!MainHex.delay) {
+                  update(dt);
+                  iaPlay();
+              }
+              else{
+                  MainHex.delay--;
+              }
+          }
+
+          if (checkGameOver() && !importing) {
+              var saveState = localStorage.getItem("saveState") || "{}";
+              saveState = JSONfn.parse(saveState);
+              gameState = 2;
+
+              canRestart = 0;
+              clearSaveState();
+              enableRestart();
+          }
+          break;
+
+      case 0:
+          break;
+      case -1:
+          break;
+      case 2:
+          update(dt);
+          break;
+
+      case 3:
+          break;
+
+      case 4:
+          initialize(1);
+          return;
+
+      default:
+          initialize();
+          break;
+  }
+
+  setTimeout(gameLoop, 10);
 }
 
 function animLoop() {
-    switch (gameState) {
-        case 1:
-            requestAnimFrame(animLoop);
-            render();
-            var now = Date.now();
-            var dt = (now - lastTime)/16.666 * rush;
-            elapsedTime += (now - lastTime) || 0;
-
-            if(gameState == 1 ){
-                if(!MainHex.delay) {
-                    update(dt);
-                    iaPlay();
-                }
-                else{
-                    MainHex.delay--;
-                }
-            }
-
-            lastTime = now;
-
-            if (checkGameOver() && !importing) {
-                var saveState = localStorage.getItem("saveState") || "{}";
-                saveState = JSONfn.parse(saveState);
-                gameState = 2;
-
-                setTimeout(function() {
-                    enableRestart();
-                }, 150);
-
-                if ($('#helpScreen').is(':visible')) {
-                    $('#helpScreen').fadeOut(150, "linear");
-                }
-
-                if ($('#pauseBtn').is(':visible')) $('#pauseBtn').fadeOut(150, "linear");
-                if ($('#restartBtn').is(':visible')) $('#restartBtn').fadeOut(150, "linear");
-                if (!$('.helpText').is(':visible')) $('.helpText').fadeIn(150, "linear");
-
-                showbottombar();
-                canRestart = 0;
-                clearSaveState();
-            }
-            break;
-
-        case 0:
-            requestAnimFrame(animLoop);
-            render();
-            break;
-
-        case -1:
-            requestAnimFrame(animLoop);
-            render();
-            break;
-
-        case 2:
-            var now = Date.now();
-            var dt = (now - lastTime)/16.666 * rush;
-            requestAnimFrame(animLoop);
-            update(dt);
-            render();
-            lastTime = now;
-            break;
-
-        case 3:
-            requestAnimFrame(animLoop);
-            fadeOutObjectsOnScreen();
-            render();
-            break;
-
-        case 4:
-            setTimeout(function() {
-                initialize(1);
-            }, 1);
-            render();
-            return;
-
-        default:
-            initialize();
-            setStartScreen();
-            break;
-    }
-
-    if (!(gameState == 1 || gameState == 2)) {
-        lastTime = Date.now();
-    }
+    render();
+    setTimeout(animLoop, 100)
 }
 
 function enableRestart() {
@@ -309,10 +277,9 @@ function isInfringing(hex) {
 }
 
 function checkGameOver() {
-    if (elapsedTime > 2 * 60 * 1000) {
+    if (elapsedTime > 1 * 60 * 1000) {
       console.log("Time's up: Game Over");
-      writeHighScores();
-      gameOverDisplay();
+      console.log("Score: " + score);
       return true;
     }
 
@@ -322,8 +289,7 @@ function checkGameOver() {
             if (highscores.indexOf(score) == -1) {
                 highscores.push(score);
             }
-            writeHighScores();
-            gameOverDisplay();
+            console.log("Score: " + score);
             return true;
         }
     }
