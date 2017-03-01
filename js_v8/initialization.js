@@ -164,11 +164,11 @@ function initialize(a) {
 
     if (a != 1) {
         window.canRestart = 1;
-        window.onblur = function(e) {
-            if (gameState == 1) {
-                pause();
-            }
-        };
+        // window.onblur = function(e) {
+        //     if (gameState == 1) {
+        //         pause();
+        //     }
+        // };
 
         $('#startBtn').off();
 
